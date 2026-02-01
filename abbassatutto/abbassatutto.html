@@ -1,0 +1,179 @@
+<!-- NOTA: si raccomanda di usare questo template anche se non lo si capisce completamente. -->
+
+<!DOCTYPE html>
+<html lang="it" data-theme="dark" class="loading">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=400, initial-scale=1">
+  <link rel="stylesheet" href="https://olinfo.it/territoriali/template/main.css">
+  <link rel="icon" href="https://olinfo.it/favicon.ico">
+  <title>abbassatutto</title>
+
+  <!--  1. Modifica la funzione solve                          -->
+  <!--  2. Apri la pagina in un browser                        -->
+  <!--  3. Incolla l'input nel form oppure caricalo da un file -->
+  <!--  4. Genera l'output e scaricalo in un file              -->
+  <!--  5. Carica questo file e l'output sulla piattaforma     -->
+
+  <script id="solution">
+
+    function solve(T, N, P, C) {
+        var ris = 0;
+        
+        // esempio: C = [4, 5, 2]
+        // cassa_minimo:
+        // C[0]                       --> [4]
+        // min cassaminimo[0] e c[1]  --> [4,4]
+        // min cassaminimo[1] e c[2]  --> [4,4,2]
+
+        // 3 2 2 1 0
+        // 2 2 2 2 2
+
+        // cassa_minimo = [2,2,2,2,2[]
+
+        // 3*2 + 2*2 + 2*2 + 1*2 + 0
+        // 6 + 4 + 4 + 2
+        // 8 + 8 = 16
+
+        // INSERISCI IL TUO CODICE QUI
+        let cassa_minimo = [] // array con il costo minimo in ordine decrescente
+        cassa_minimo[0] = C[0]
+
+        for (let i = 1; i < N; i++){              // confronta il il costo cassa attuale con quello di prima
+          cassa_minimo[i] = Math.min(cassa_minimo[i-1], C[i])
+        }
+
+        for (let i = 0; i < N; i++){        // somma totale per ogni posizione alla propria cassa minima
+          ris += P[i]*cassa_minimo[i]
+        }
+
+        return ris;
+    }
+
+  </script>
+
+  <script id="template">
+
+    function* main(input) {
+        var T = input.nextInt();
+        for (var test = 1; test <= T; ++test) {
+            var N = input.nextInt();
+
+            var P = Array(N);
+            for (var i = 0; i < N; ++i)
+                P[i] = input.nextInt();
+
+            var C = Array(N);
+            for (var i = 0; i < N; ++i)
+                C[i] = input.nextInt();
+
+            try {
+                var ris = solve(T, N, P, C);
+                yield `Case #${test}: `;
+                yield `${ris}\r\n`;
+            } catch (e) {
+                yield `Case #${test} failed with error: ${e}\r\n`;
+            }
+        }
+    }
+
+  </script>
+</head>
+
+<body>
+  <div class="container mt-3 mb-4">
+    <div class="row">
+      <div class="col mt-2">
+        <div class="container">
+          <div class="row mb-1 justify-content-between">
+            <div class="col-auto">
+              <p class="h2">
+                <i class="fa fa-file-code fs-3 pe-2"></i>Codice
+              </p>
+            </div>
+            <div class="col-auto order-md-last text-md-end pe-0">
+              <button class="btn shadow-none pe-0" id="btn-theme">
+                <i class="fa fa-sun fs-4 text-warning d-dark-none"></i>
+                <i class="fa fa-moon fs-4 text-light d-light-none"></i>
+              </button>
+            </div>
+            <div class="col-md-auto text-md-end">
+              <p class="lead mb-0 lh-lg">Modifica questo file e ricarica la pagina!</p>
+            </div>
+          </div>
+          <div class="row">
+            <pre class="border rounded pt-2 pb-2 mb-0"><code id="txt-code"></code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-lg-6 mt-2">
+        <div class="container">
+          <div class="row justify-content-between mb-1">
+            <div class="col-auto">
+              <label class="h2" for="txt-input">
+                <i class="fa fa-file-upload fs-3 pe-2"></i>Input
+              </label>
+            </div>
+            <div class="col-auto p-0" role="group">
+              <form class="container btn-group p-0">
+                <label class="btn btn-outline-primary shadow-none">
+                  <input class="d-none" type="reset" id="btn-reset">
+                  <i class="fa fa-trash pe-2"></i>Cancella
+                </label>
+                <label class="btn btn-outline-primary shadow-none">
+                  <input class="d-none" type="file" id="btn-open">
+                  <i class="fa fa-upload pe-2"></i>Scegli file
+                </label>
+              </form>
+            </div>
+          </div>
+          <div class="row">
+            <textarea class="form-control border" rows="9" id="txt-input"
+              placeholder="Incolla oppure trascina l'input qui"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 mt-2">
+        <div class="container">
+          <div class="row justify-content-between mb-1">
+            <div class="col-auto">
+              <label class="h2" for="txt-output">
+                <i class="fa fa-file-download fs-3 pe-2"></i>Output
+              </label>
+            </div>
+            <div class="col-auto p-0" role="group">
+              <div class="container btn-group p-0">
+                <button class="btn btn-outline-primary shadow-none" title="Copiato!"
+                  data-bs-trigger="manual" id="btn-copy">
+                  <i class="fa fa-copy pe-1"></i>Copia
+                </button>
+                <button class="btn btn-outline-primary shadow-none" id="btn-download">
+                  <i class="fa fa-download pe-1"></i>Scarica
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <textarea class="form-control border" rows="9" id="txt-output"
+              placeholder="Premi “Esegui” per ottenere l'output" readonly></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center mt-2">
+      <div class="col-auto mt-2">
+        <button class="btn btn-primary shadow-none" id="btn-exec">
+          <i class="fa fa-running pe-1"></i>Esegui
+        </button>
+        <button class="btn btn-primary shadow-none" id="btn-kill">
+          <i class="fa fa-skull pe-1"></i>Termina
+        </button>
+      </div>
+    </div>
+  </div>
+  <script src="https://olinfo.it/territoriali/template/main.js"></script>
+</body>
+</html>
