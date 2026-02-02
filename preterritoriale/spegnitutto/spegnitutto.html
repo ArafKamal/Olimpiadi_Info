@@ -18,22 +18,17 @@
 
   <script id="solution">
 
-    function solve(T, N, A) {
-        var ris = 0;
+  function solve(T, N, A) {
+    let ris = 0
 
-        // INSERISCI IL TUO CODICE QUI
-        for (let i = 0; i < N; i++){        // scorre
-          if (A[i] === 1){                  // se accesa
-            if (i+1 < N && A[i+1] === 1) {  // se la lampada non è ultima e quella dopo è accesa | interruttore
-              i++
-              ris++                         // skip dato che spento
-            } else {                        // azione svitare
-              ris++
-            }
-          }
+    for (let i = 0; i < N; i++) {
+        if (A[i] === 1) {
+            ris++
+            if (A[i + 1] === 1) i++
         }
-        return ris;
     }
+    return ris
+  }
 
   </script>
 

@@ -18,8 +18,8 @@
 
   <script id="solution">
 
-    function solve(T, N, P, C) {
-        var ris = 0;
+    // function solve(T, N, P, C) {
+        // var ris = 0;
         
         // esempio: C = [4, 5, 2]
         // cassa_minimo:
@@ -37,18 +37,26 @@
         // 8 + 8 = 16
 
         // INSERISCI IL TUO CODICE QUI
-        let cassa_minimo = [] // array con il costo minimo in ordine decrescente
-        cassa_minimo[0] = C[0]
+        // let cassa_minimo = [] // array con il costo minimo in ordine decrescente
+        // cassa_minimo[0] = C[0]
 
-        for (let i = 1; i < N; i++){              // confronta il il costo cassa attuale con quello di prima
-          cassa_minimo[i] = Math.min(cassa_minimo[i-1], C[i])
-        }
+        // for (let i = 1; i < N; i++){              // confronta il il costo cassa attuale con quello di prima
+        //  cassa_minimo[i] = Math.min(cassa_minimo[i-1], C[i])
+        // }
 
-        for (let i = 0; i < N; i++){        // somma totale per ogni posizione alla propria cassa minima
-          ris += P[i]*cassa_minimo[i]
-        }
+        //cassa_minimo.forEach((costo, i) => { // costo = costo corrente cassa, i = indice
+        //  ris += P[i] * costo;
+        // })
 
-        return ris;
+        // return ris
+    // }
+    function solve(T, N, P, C) {
+      var ris = 0
+      let minimo = C[0]
+      ris = P.reduce((totale, p, i) => { // Cicla tutti gli elementi di P con reduce
+        minimo = Math.min(minimo, C[i])      // Minimo = il minimo tra quello corrente e C[i]
+        return totale + p * minimo
+      }, 0)
     }
 
   </script>
