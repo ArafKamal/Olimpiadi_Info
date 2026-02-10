@@ -27,15 +27,17 @@
       valore += guadagno
 
       if (valore >= V[i]) {
-        // confronto diretto del valore finale
-        // confronta il guadagno totale stimato attuale con quello se si fa lo scambio
-        if (V[i] + G[i] * (N - i) > valore + guadagno * (N - i)) {
-          valore = V[i];
-          guadagno = G[i];
+        // controllo se conviene scambio
+        let v_finale1 = valore + guadagno * (N - i)
+        let v_finale2 = V[i] + G[i] * (N - i)
+
+        if (v_finale1 < v_finale2){
+          valore = V[i]
+          guadagno = G[i]
         }
       }
     }
-
+    // aggiunta finale
     ris = valore + guadagno
     return ris
   }
